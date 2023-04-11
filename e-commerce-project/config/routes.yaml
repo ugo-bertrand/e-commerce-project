@@ -1,5 +1,82 @@
-controllers:
-    resource:
-        path: ../src/Controller/
-        namespace: App\Controller
-    type: attribute
+#### User Part ####
+
+api_register:
+    path: /api/register
+    controller: App\Controller\UserController::createUser
+    methods: POST
+
+api_login:
+    path: /api/login
+    controller: App\Controller\UserController::loginUser
+    methods: GET
+
+api_user_update:
+    path: /api/users
+    controller: App\Controller\UserController::updateUser
+    methods: PUT
+
+api_user_display:
+    path: /api/users
+    controller: App\Controller\UserController::displayUser
+    methods: GET
+
+#### Product Part ####
+
+api_products:
+    path: /api/products
+    controller: App\Controller\ProductController::listProducts
+    methods: GET
+
+api_product_id:
+    path: /api/products/{productId}
+    controller: App\Controller\ProductController::getProductById
+    methods: GET
+
+api_add_product:
+    path: /api/products
+    controller: App\Controller\ProductController::createProduct
+    methods: POST
+
+api_update_product:
+    path: /api/products/{productId}
+    controller: App\Controller\ProductController::updateProduct
+    methods: PUT
+
+api_delete_product:
+    path: /api/products/{productId}
+    controller: App\Controller\ProductController::deleteProduct
+    methods: DELETE
+
+#### Cart Part ####
+
+api_add_product_cart:
+    path: /api/carts/{productId}
+    controller: App\Controller\CartController::addCartProduct
+    methods: POST
+
+api_remove_product_cart:
+    path: /api/carts/{productId}
+    controller: App\Controller\CartController::removeCartProduct
+    methods: DELETE
+
+api_cart:
+    path: /api/carts
+    controller: App\Controller\CartController::displayCart
+    methods: GET
+
+api_cart_validation:
+    path: /api/carts/validate
+    controller: App\Controller\CartController::validateCart
+    methods: POST
+
+#### Order Part ####
+
+api_orders_user:
+    path: /api/orders/
+    controller: App\Controller\OrderController::findAllOrder
+    methods: GET
+
+api_order_id:
+    path: /api/orders/{orderId}
+    controller: App\Controller\OrderController::findOrderById
+    methods: GET
