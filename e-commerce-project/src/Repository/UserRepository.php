@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\User;
+use App\Exception\NotFoundException;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -46,6 +47,32 @@ class UserRepository extends ServiceEntityRepository
             ->setParameter('login',$login)
             ->getQuery()
             ->getOneOrNullResult();
+    }
+
+    public function updateUserById(int $id, User $newUser): void
+    {
+        $user = $this->find($id);
+
+        if(!$user){
+            throw new NotFoundException("L'utilisateur n'existe pas");
+        }
+
+        $user->setLogin($newUser->getLogin());
+        $user->setPassword($newUser->getPassword());
+        $user->setEmail($newUser->getEmail());
+        $user->setFirstname($newUser->getFirstname());
+        $user->setLastname($newUser->getLastname());
+
+        $this->getEntityManager()->flush();
+    }
+
+    public function getUserById(int $id): User
+    {
+        $user = $this->find($id);
+        if(!$user){
+            throw new NotFoundException("L'utilisateur n'existe pas");
+        }
+        return $user;
     }
 
 //    /**

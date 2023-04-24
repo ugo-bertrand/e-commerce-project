@@ -17,7 +17,7 @@ class Cart
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
-    private ?User $userId = null;
+    private ?User $user = null;
 
     #[ORM\OneToMany(mappedBy: 'cart', targetEntity: Product::class)]
     private Collection $products;
@@ -32,14 +32,14 @@ class Cart
         return $this->id;
     }
 
-    public function getUserId(): ?User
+    public function getUser(): ?User
     {
-        return $this->userId;
+        return $this->user;
     }
 
-    public function setUserId(User $userId): self
+    public function setUser(User $user): self
     {
-        $this->userId = $userId;
+        $this->user = $user;
 
         return $this;
     }

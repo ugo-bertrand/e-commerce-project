@@ -49,6 +49,11 @@ api_delete_product:
 
 #### Cart Part ####
 
+api_cart_validation:
+    path: /api/carts/validate
+    controller: App\Controller\CartController::validateCart
+    methods: POST
+    
 api_add_product_cart:
     path: /api/carts/{productId}
     controller: App\Controller\CartController::addCartProduct
@@ -63,11 +68,6 @@ api_cart:
     path: /api/carts
     controller: App\Controller\CartController::displayCart
     methods: GET
-
-api_cart_validation:
-    path: /api/carts/validate
-    controller: App\Controller\CartController::validateCart
-    methods: POST
 
 #### Order Part ####
 

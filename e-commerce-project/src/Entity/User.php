@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Ignore;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 class User
@@ -11,12 +12,15 @@ class User
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Ignore]
     private ?int $id = null;
 
+    //unique login
     #[ORM\Column(length: 255)]
     private ?string $login = null;
 
     #[ORM\Column(length: 255)]
+    #[Ignore]
     private ?string $password = null;
 
     #[ORM\Column(length: 255)]

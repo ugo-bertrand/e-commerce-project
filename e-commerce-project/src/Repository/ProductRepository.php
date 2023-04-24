@@ -3,7 +3,10 @@
 namespace App\Repository;
 
 use App\Entity\Product;
+use App\Exception\NotFoundException;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -37,6 +40,48 @@ class ProductRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    public function getProducts(): array
+    {
+        return $this->createQueryBuilder('product')
+            ->orderBy('product.id', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function updateProductById(int $id, Product $newProduct): void
+    {
+        $product = $this->find($id);
+
+        if(!$product){
+            throw new NotFoundException("Le produit n'existe pas");
+        }
+
+        $product->setName($newProduct->getName());
+        $product->setDescription($newProduct->getDescription());
+        $product->setPhoto($newProduct->getPhoto());
+        $product->setPrice($newProduct->getPrice());
+
+        $this->save($product,true);
+    }
+
+    public function getProductById(int $id): Product
+    {
+        $product = $this->find($id);
+        if(!$product){
+            throw new NotFoundException("Le produit n'existe pas");
+        }
+        return $product;
+    }
+
+    public function deleteProductById(int $id): void
+    {
+        $product = $this->find($id);
+        if(!$product){
+            throw new NotFoundException("Le produit n'existe pas");
+        }
+        $this->remove($product,true);
     }
 
 //    /**

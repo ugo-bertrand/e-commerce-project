@@ -2,9 +2,14 @@
 
 namespace App\Repository;
 
+use App\Entity\User;
 use App\Entity\Cart;
+use App\Entity\Product;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\Persistence\ManagerRegistry;
+use App\Exception\NotFoundException;
 
 /**
  * @extends ServiceEntityRepository<Cart>
@@ -36,6 +41,47 @@ class CartRepository extends ServiceEntityRepository
 
         if ($flush) {
             $this->getEntityManager()->flush();
+        }
+    }
+
+    public function getProducts(User $user): Collection
+    {
+        $cart = $this->findOneBy(["user" => $user]);
+        if(!$cart){
+            throw new NotFoundException("Le panier est vide");
+        }
+        return $cart->getProducts();
+    }
+
+    public function addProduct(User $user, Product $product): void
+    {
+        $cart = $this->findOneBy(["user" => $user]);
+        if(!$cart){
+            $cart = new Cart();
+            $cart->setUser($user);
+        }
+        $cart->addProduct($product);
+        $this->save($cart,true);
+    }
+
+    public function removeProduct(User $user, Product $product): void
+    {
+        $cart = $this->findOneBy(["user" => $user]);
+        if(!$cart){
+            throw new NotFoundException("Le panier est vide");
+        }
+        $cart->removeProduct($product);
+        $this->save($cart,true);
+    }
+
+    public function clearCart(User $user): void
+    {
+        $cart = $this->findOneBy(["user" => $user]);
+        if(!$cart){
+            throw new NotFoundException("Le panier est déjà vide");
+        }
+        while($cart->getProducts()->count() > 0){
+            $cart->removeProduct($cart->getProducts()->first());
         }
     }
 

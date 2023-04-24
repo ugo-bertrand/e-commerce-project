@@ -39,28 +39,23 @@ class OrderRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return Order[] Returns an array of Order objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('o')
-//            ->andWhere('o.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('o.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function addOrder(Order $order): void
+    {
+        $this->save($order, true);
+    }
 
-//    public function findOneBySomeField($value): ?Order
-//    {
-//        return $this->createQueryBuilder('o')
-//            ->andWhere('o.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    public function getOrderOfUser(int $userId): array
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+        SELECT * FROM `order` o 
+        WHERE o.user_id = :id
+        ORDER BY o.creation_date DESC
+        ';
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery(['id' => $userId]);
+
+        return $resultSet->fetchAllAssociative();
+    }
 }

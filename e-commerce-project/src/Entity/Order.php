@@ -20,11 +20,14 @@ class Order
     #[ORM\Column]
     private ?float $totalPrice = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $creationDate = null;
+    #[ORM\Column(type: Types::TEXT)]
+    private ?string $creationDate = null;
 
     #[ORM\OneToMany(mappedBy: 'validateOrder', targetEntity: Product::class)]
     private Collection $products;
+
+    #[ORM\Column]
+    private int $userId;
 
     public function __construct()
     {
@@ -48,12 +51,12 @@ class Order
         return $this;
     }
 
-    public function getCreationDate(): ?\DateTimeInterface
+    public function getCreationDate(): ?string
     {
         return $this->creationDate;
     }
 
-    public function setCreationDate(\DateTimeInterface $creationDate): self
+    public function setCreationDate(string $creationDate): self
     {
         $this->creationDate = $creationDate;
 
@@ -87,6 +90,17 @@ class Order
             }
         }
 
+        return $this;
+    }
+
+    public function getUserId() : int
+    {
+        return $this->userId;
+    }
+
+    public function setUserId(int $id) : self
+    {
+        $this->userId = $id;
         return $this;
     }
 }
