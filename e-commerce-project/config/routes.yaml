@@ -8,7 +8,7 @@ api_register:
 api_login:
     path: /api/login
     controller: App\Controller\UserController::loginUser
-    methods: GET
+    methods: POST
 
 api_user_update:
     path: /api/users

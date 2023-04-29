@@ -38,7 +38,7 @@ class CartController extends AbstractController
             $product = $productRepository->getProductById($productId);
             $cartRepository->addProduct($user,$product);
 
-            return new JsonResponse(["statut" => "Le produit a bien été ajouté dans le panier"],201);
+            return new JsonResponse(["statut" => "Le produit a bien été ajouté dans le panier"],200);
 
         }
         catch(Exception $e){
@@ -71,18 +71,15 @@ class CartController extends AbstractController
             $user = $userRepository->getUserById($userId);
 
             $product = $productRepository->getProductById($productId);
-            $cartRepository->removeProducts($user,$product);
+            $cartRepository->removeProduct($user,$product);
 
-            return new JsonResponse(["statut" => "Le produit a bien été supprimé du panier"],204);
+            return new JsonResponse(["statut" => "Le produit a bien été supprimé du panier"],200);
 
         }
         catch(Exception $e){
             $logger->error("Une erreur est survenue lors de la suppresion du produit du panier.");
             $error = new JsonErrorController();
-            if($e->getCode() == 403){
-                return $error->showError($e);
-            }
-            else if($e->getCode() == 401){
+            if($e->getCode() == 401){
                 return $error->showError($e);
             }
             else if($e->getCode() == 404){
@@ -125,10 +122,7 @@ class CartController extends AbstractController
         catch(Exception $e){
             $logger->error("Une erreur est survenue lors de la modification du produit.");
             $error = new JsonErrorController();
-            if($e->getCode() == 403){
-                return $error->showError($e);
-            }
-            else if($e->getCode() == 401){
+            if($e->getCode() == 401){
                 return $error->showError($e);
             }
             else if($e->getCode() == 404){
@@ -179,10 +173,7 @@ class CartController extends AbstractController
         catch(Exception $e){
             $logger->error("Une erreur est survenue lors de la modification du produit.");
             $error = new JsonErrorController();
-            if($e->getCode() == 403){
-                return $error->showError($e);
-            }
-            else if($e->getCode() == 401){
+            if($e->getCode() == 401){
                 return $error->showError($e);
             }
             else if($e->getCode() == 404){

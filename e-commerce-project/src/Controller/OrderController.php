@@ -30,7 +30,7 @@ class OrderController extends AbstractController
 
             $logger->info("Récupération des commandes de l'utilisateur");
             $listOfOrder = $orderRepository->getOrderOfUser($userId);
-            $logger->debug("{list}", ['list' => $listOfOrder]);
+            $logger->debug("Affichage de la liste des commandes {list}", ['list' => $listOfOrder]);
             if($listOfOrder == null || count($listOfOrder) == 0){
                 $logger->error("La liste de commandes est vide");
                 throw new NotFoundException("Il n'y a pas de commandes pour cet utilisateur");
@@ -40,7 +40,7 @@ class OrderController extends AbstractController
             for($i = 0; $i < count($listOfOrder); $i++){
                 $productData = [];
                 $listOfProductOrder = $productRepository->findBy(['validateOrder' => $listOfOrder[$i]]);
-                $logger->debug("{list}", ['list' => $listOfProductOrder[0]]);
+                $logger->debug("liste des produits de la commande en cours {list}", ['list' => $listOfProductOrder[0]]);
                 for($j = 0; $j < count($listOfProductOrder); $j++){
                     $productData[$j] = [
                         'id' => $listOfProductOrder[$j]->getId(),

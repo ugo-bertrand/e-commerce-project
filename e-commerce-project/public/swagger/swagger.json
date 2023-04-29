@@ -1,0 +1,1578 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "E-commerce-API",
+    "description": "Documentation technique de notre API pour notre projet E-commerce (Epitech)",
+    "version": "0.1.9"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080/",
+      "description": "URL principal de l'API"
+    },
+    {
+      "url": "http://localhost:3000/",
+      "description": "URL du front-end pour tester le fonctionnement de l'API"
+    }
+  ],
+  "paths": {
+    "/api/register": {
+      "post": {
+        "tags": [
+          "Utilisateurs"
+        ],
+        "summary": "Inscription de l'utilisateur",
+        "description": "Cette méthode permet à l'utilisateur de créer son propre compte",
+        "operationId": "createUser",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "login": {
+                    "type": "string",
+                    "example": "ugo-bertrand"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "bipbip"
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": "ugo.bertrand@epitech.eu"
+                  },
+                  "firstname": {
+                    "type": "string",
+                    "example": "ugo"
+                  },
+                  "lastname": {
+                    "type": "string",
+                    "example": "bertrand"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "L'utilisateur a été créer"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Le contenu ne doit pas être vide, veuillez mettre les valeurs correspondantes"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Internal Server Error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/login": {
+      "get": {
+        "tags": [
+          "Utilisateurs"
+        ],
+        "summary": "Connexion de l'utilsateur",
+        "description": "Cette méthode permet à l'utilisateur de se connecter à son compte",
+        "operationId": "loginUser",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "login": {
+                    "type": "string",
+                    "example": "ugo-bertrand"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "bipbip"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string",
+                      "example": "eyakljgsfsdfesgjsmlsqkjfùsmqlkhsdmlfsdfshdfsdfsd"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Le mot de passe ne correspond pas"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Le contenu ne doit pas être vide, veuillez mettre les valeurs correspondantes"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Internal Server Error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/users": {
+      "put": {
+        "tags": [
+          "Utilisateurs"
+        ],
+        "summary": "Mettre à jour les données de l'utilisateur",
+        "description": "Cette méthode permet à l'utilisateur de modifier son compte",
+        "operationId": "updateUser",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string",
+            "required": true,
+            "description": "Token pour vérifier si l'utilisateur est bien connecté"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "login": {
+                    "type": "string",
+                    "example": "ugo-bertrand"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "bipbip"
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": "ugo.bertrand@epitech.eu"
+                  },
+                  "firstname": {
+                    "type": "string",
+                    "example": "ugo"
+                  },
+                  "lastname": {
+                    "type": "string",
+                    "example": "bertrand"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "statut": {
+                      "type": "string",
+                      "example": "Votre utilisateur a bien été modifié"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Vous n'êtes pas connecté, veuillez vous connecter"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Le contenu ne doit pas être vide, veuillez mettre les valeurs correspondantes"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Internal Server Error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/users/": {
+      "get": {
+        "tags": [
+          "Utilisateurs"
+        ],
+        "summary": "Récupération des informations de l'utilisateurs",
+        "description": "Cette méthode permet à l'utilisateur de récupérer ses informations",
+        "operationId": "displayUser",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": "Token pour vérifier si l'utilisateur est bien connecté"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "login": {
+                      "type": "string",
+                      "example": "ugo-bertrand"
+                    },
+                    "email": {
+                      "type": "string",
+                      "example": "ugo.bertrand@epitech.eu"
+                    },
+                    "firstname": {
+                      "type": "string",
+                      "example": "ugo"
+                    },
+                    "lastname": {
+                      "type": "string",
+                      "example": "bertrand"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Vous n'êtes pas connecté, veuillez vous connecter"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Internal Server Error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/products": {
+      "get": {
+        "tags": [
+          "Produits"
+        ],
+        "summary": "Récupération de la liste des produits",
+        "description": "Cette méthode permet de récupérer la liste des produits",
+        "operationId": "listProducts",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "integer",
+                        "format": "int32",
+                        "example": 1
+                      },
+                      "name": {
+                        "type": "string",
+                        "example": "the best item"
+                      },
+                      "description": {
+                        "type": "string",
+                        "example": "description of the best item"
+                      },
+                      "photo": {
+                        "type": "string",
+                        "example": "path/to/the/best/item"
+                      },
+                      "price": {
+                        "type": "float",
+                        "example": 42.42
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Internal Server Error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/products{productId}": {
+      "get": {
+        "tags": [
+          "Produits"
+        ],
+        "summary": "Récupération d'un produit",
+        "description": "Cette méthode permet de récupérer un produit selon son Id",
+        "operationId": "getProductById",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "productId",
+            "in": "path",
+            "type": "integer",
+            "required": true,
+            "description": "Id du produit"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "format": "int32",
+                      "example": 1
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "the best item"
+                    },
+                    "description": {
+                      "type": "string",
+                      "example": "description of the best item"
+                    },
+                    "photo": {
+                      "type": "string",
+                      "example": "path/to/the/best/item"
+                    },
+                    "price": {
+                      "type": "float",
+                      "example": 42.42
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Le produit n'existe pas"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Internal Server Error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/products/": {
+      "post": {
+        "tags": [
+          "Produits"
+        ],
+        "summary": "Créer un produit",
+        "description": "Méthode permettant de créer un produit",
+        "operationId": "createProduct",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string",
+            "required": true,
+            "description": "Token pour vérifier si l'utilisateur est bien connecté"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "the best item"
+                  },
+                  "description": {
+                    "type": "string",
+                    "example": "description of the best item"
+                  },
+                  "photo": {
+                    "type": "string",
+                    "example": "/path/to/the/picture"
+                  },
+                  "price": {
+                    "type": "float",
+                    "example": 42
+                  }
+                }
+              }
+            }
+          }
+        },
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Le produit a été créé"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Vous n'êtes pas connecté, veuillez vous connecter"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Le contenu ne doit pas être vide, veuillez mettre les valeurs correspondantes"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Internal Server Error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/products/{productId}/": {
+      "put": {
+        "tags": [
+          "Produits"
+        ],
+        "summary": "Mettre à jour un produit",
+        "description": "Cette méthode permet de mettre à jour les informations d'un produit",
+        "operationId": "updateProduct",
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "productId",
+            "in": "path",
+            "type": "integer",
+            "required": true,
+            "description": "Id du produit"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string",
+            "required": true,
+            "description": "Token pour vérifier si l'utilisateur est connecté"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "the best item"
+                  },
+                  "description": {
+                    "type": "string",
+                    "example": "description of the best item"
+                  },
+                  "photo": {
+                    "type": "string",
+                    "example": "/path/to/the/picture"
+                  },
+                  "price": {
+                    "type": "float",
+                    "example": 42
+                  }
+                }
+              }
+            }
+          }
+        },
+        "response": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "statut": {
+                      "type": "string",
+                      "example": "Le produit a bien été modifié"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Vous n'êtes pas connecté, veuillez vous connecter"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Le contenu ne doit pas être vide, veuillez mettre les valeurs correspondantes"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Internal Server Error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/products/{productId}": {
+      "delete": {
+        "tags": [
+          "Produits"
+        ],
+        "summary": "Supprimer un produit",
+        "description": "Cette méthode permet de supprimer un produit",
+        "operationId": "deleteProduct",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "productId",
+            "in": "path",
+            "type": "integer",
+            "required": true,
+            "description": "Id du produit"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string",
+            "required": true,
+            "description": "Token pour vérifier si l'utilisateur est connecté"
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "statut": {
+                      "type": "string",
+                      "example": "Le produit a bien été supprimé"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Vous n'êtes pas connecté, veuillez vous connecter"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Le produit n'existe pas"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Internal Server Error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/carts/validate": {
+      "post": {
+        "tags": [
+          "Panier"
+        ],
+        "summary": "Valider le panier",
+        "description": "Cette méthode permet de valider le panier de l'utilisateur",
+        "operationId": "validateCart",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string",
+            "required": true,
+            "description": "Token pour vérifier si l'utilisateur est connecté"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "statut": {
+                      "type": "string",
+                      "example": "Le panier a bien été validé"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Vous n'êtes pas connecté, veuillez vous connecter"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Le panier est vide"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Internal Server Error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/carts/{productId}": {
+      "post": {
+        "tags": [
+          "Panier"
+        ],
+        "summary": "Ajouter un produit dans le panier",
+        "description": "Cette méthode permet d'ajouter un produit dans le panier",
+        "operationId": "addCartProduct",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string",
+            "required": true,
+            "description": "Token pour vérifier si l'utilisateur est connecté"
+          },
+          {
+            "name": "productId",
+            "in": "path",
+            "type": "integer",
+            "required": true,
+            "description": "Id du produit"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "statut": {
+                      "type": "string",
+                      "example": "Le produit a bien été ajouté dans le panier"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Vous n'êtes pas connecté, veuillez vous connecter"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Le produit n'existe pas"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Internal Server Error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/carts/{productId}/": {
+      "delete": {
+        "tags": [
+          "Panier"
+        ],
+        "summary": "Supprimer un produit dans le panier",
+        "description": "Cette méthode permet de supprimer un produit dans le panier",
+        "operationId": "removeCartProduct",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string",
+            "required": true,
+            "description": "Token pour vérifier si l'utilisateur est connecté"
+          },
+          {
+            "name": "productId",
+            "in": "path",
+            "type": "integer",
+            "required": true,
+            "description": "Id du produit"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "statut": {
+                      "type": "string",
+                      "example": "Le produit a bien été supprimer du panier"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Vous n'êtes pas connecté, veuillez vous connecter"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Le produit n'existe pas"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Internal Server Error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/carts": {
+      "get": {
+        "tags": [
+          "Panier"
+        ],
+        "summary": "Afficher tous les produits du panier",
+        "description": "Cette méthode permet d'afficher tous les produits du panier",
+        "operationId": "displayCart",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string",
+            "required": true,
+            "description": "Token pour vérifier si l'utilisateur est connecté"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "integer",
+                        "format": "int32",
+                        "example": 1
+                      },
+                      "name": {
+                        "type": "string",
+                        "example": "the best item"
+                      },
+                      "description": {
+                        "type": "string",
+                        "example": "description of the best item"
+                      },
+                      "photo": {
+                        "type": "string",
+                        "example": "path/to/the/picture"
+                      },
+                      "price": {
+                        "type": "float",
+                        "example": 42.42
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Vous n'êtes pas connecté, veuillez vous connecter"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Le panier est vide"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Internal Server Error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/orders/": {
+      "get": {
+        "tags": [
+          "Commandes"
+        ],
+        "summary": "Afficher toutes les commandes de l'utilisateur",
+        "description": "Cette méthode permet d'afficher toutes les commandes réalisé par l'utilisateur",
+        "operationId": "findAllOrder",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string",
+            "required": true,
+            "description": "Token pour vérifier si l'utilisateur est connecté"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "integer",
+                        "format": "int32",
+                        "example": 1
+                      },
+                      "totalPrice": {
+                        "type": "float",
+                        "example": 84.84
+                      },
+                      "creationDate": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "products": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "integer",
+                              "format": "int32",
+                              "example": 1
+                            },
+                            "name": {
+                              "type": "string",
+                              "example": "the best item"
+                            },
+                            "description": {
+                              "type": "string",
+                              "example": "description of the best item"
+                            },
+                            "photo": {
+                              "type": "string",
+                              "example": "/path/to/the/picture"
+                            },
+                            "price": {
+                              "type": "float",
+                              "example": 42.42
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Vous n'êtes pas connecté, veuillez vous connecter"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Le panier est vide"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Internal Server Error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/orders/{orderId}": {
+      "get": {
+        "tags": [
+          "Commandes"
+        ],
+        "summary": "Afficher Une commande de l'utilisateur",
+        "description": "Cette méthode permet d'afficher une commandes réalisé par l'utilisateur",
+        "operationId": "findOrderById",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string",
+            "required": true,
+            "description": "Token pour vérifier si l'utilisateur est connecté"
+          },
+          {
+            "name": "orderId",
+            "in": "path",
+            "type": "integer",
+            "required": true,
+            "description": "Id de la commande"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "format": "int32",
+                      "example": 1
+                    },
+                    "totalPrice": {
+                      "type": "float",
+                      "example": 84.84
+                    },
+                    "creationDate": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "products": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer",
+                            "format": "int32",
+                            "example": 1
+                          },
+                          "name": {
+                            "type": "string",
+                            "example": "the best item"
+                          },
+                          "description": {
+                            "type": "string",
+                            "example": "description of the best item"
+                          },
+                          "photo": {
+                            "type": "string",
+                            "example": "/path/to/the/picture"
+                          },
+                          "price": {
+                            "type": "float",
+                            "example": 42.42
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Vous n'êtes pas connecté, veuillez vous connecter"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "L'utilisateur n'est pas autorisé à voir ces données"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "La commande n'existe pas"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Internal Server Error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

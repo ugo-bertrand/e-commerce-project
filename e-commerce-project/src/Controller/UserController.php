@@ -129,7 +129,10 @@ class UserController extends AbstractController
 
             $logger->info("Récupération des données à modifier pour l'utilisateur");
             $body = $request->toArray();
-
+            if(count($body) != 5){
+                throw new NotFoundException("Le contenu ne doit pas être vide, veuillez mettre les valeurs correspondantes");
+            }
+            
             $logger->info("Récupération des données via la base de données de l'utilisateur");
             $newUser = new User();
             $newUser->setLogin($body['login']);
@@ -145,7 +148,7 @@ class UserController extends AbstractController
 
             return new JsonResponse([
                 "statut" => "Votre utilisateur a bien été modifié"
-            ],204);
+            ],200);
 
         }
         catch(Exception $e){
@@ -190,9 +193,6 @@ class UserController extends AbstractController
             $logger->error("Une erreur est survenue lors de la récupération des données de l'utilisateur");
             $error = new JsonErrorController();
             if($e->getCode() == 401){
-                return $error->showError($e);
-            }
-            else if($e->getCode() == 404){
                 return $error->showError($e);
             }
             else{

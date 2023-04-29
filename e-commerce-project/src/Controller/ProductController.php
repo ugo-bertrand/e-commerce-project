@@ -21,7 +21,7 @@ use Firebase\JWT\Key;
 class ProductController extends AbstractController
 {
     #[Route('/api/products', name: 'api_products')]
-    public function listProducts(LoggerInterface $logger, Request $request, ProductRepository $productRepository): JsonResponse
+    public function listProducts(LoggerInterface $logger, ProductRepository $productRepository): JsonResponse
     {
         try{
             $products = $productRepository->getProducts();
@@ -43,10 +43,7 @@ class ProductController extends AbstractController
         catch(Exception $e){
             $logger->error("Une erreur est survenue lors de la récupération des données du produit");
             $error = new JsonErrorController();
-            if($e->getCode() == 401){
-                return $error->showError($e);
-            }
-            else if($e->getCode() == 404){
+            if($e->getCode() == 404){
                 return $error->showError($e);
             }
             else{
@@ -62,7 +59,7 @@ class ProductController extends AbstractController
             $product = $productRepository->getProductById($productId);
 
             return new JsonResponse([
-                'id' => $products[$i]->getId(),
+                'id' => $product->getId(),
                 'name' => $product->getName(),
                 'description' => $product->getDescription(),
                 'photo' => $product->getPhoto(),
@@ -73,10 +70,7 @@ class ProductController extends AbstractController
         catch(Exception $e){
             $logger->error("Une erreur est survenue lors de la récupération des données du produit");
             $error = new JsonErrorController();
-            if($e->getCode() == 401){
-                return $error->showError($e);
-            }
-            else if($e->getCode() == 404){
+            if($e->getCode() == 404){
                 return $error->showError($e);
             }
             else{
@@ -123,6 +117,9 @@ class ProductController extends AbstractController
             if($e->getCode() == 404){
                 return $error->showError($e);
             }
+            if($e->getCode() == 401){
+                return $error->showError($e);
+            }
             else{
                 return $error->showDefaultError();
             }
@@ -158,16 +155,13 @@ class ProductController extends AbstractController
 
             return new JsonResponse([
                 "statut" => "Le produit a bien été modifié"
-            ],204);
+            ],200);
 
         }
         catch(Exception $e){
             $logger->error("Une erreur est survenue lors de la modification du produit.");
             $error = new JsonErrorController();
-            if($e->getCode() == 403){
-                return $error->showError($e);
-            }
-            else if($e->getCode() == 401){
+            if($e->getCode() == 401){
                 return $error->showError($e);
             }
             else if($e->getCode() == 404){
@@ -191,7 +185,7 @@ class ProductController extends AbstractController
 
             return new JsonResponse([
                 "statut" => "Le produit a bien été supprimé"
-            ],204);
+            ],200);
         }
         catch(Exception $e){
             $logger->error("Une erreur est survenue lors de la récupération des données du produit");
