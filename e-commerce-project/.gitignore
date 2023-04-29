@@ -8,4 +8,5 @@
 /var/
 /vendor/
 .env
+/migrations/*.php
 ###< symfony/framework-bundle ###
