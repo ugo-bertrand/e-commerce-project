@@ -49,7 +49,7 @@
                        this.isError = true;
                    }
                    else{
-                       axios.put(`http://127.0.0.1:8080/api/products/${this.id}`, {
+                       axios.put(`http://192.168.56.108:8080/api/products/${this.id}`, {
                            name: this.name,
                            description: this.description,
                            photo: 'path/to/the/picture',
