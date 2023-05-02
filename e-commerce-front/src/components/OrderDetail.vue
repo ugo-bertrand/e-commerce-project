@@ -33,7 +33,7 @@ import axios from 'axios';
         },
         mounted(){
             var token = localStorage.getItem('token');
-            axios.get(`http://127.0.0.1:8080/api/orders/${this.id}`,{
+            axios.get(`http://192.168.56.108:8080/api/orders/${this.id}`,{
                 headers:{
                     'Authorization': "Bearer " + token,
                     'Accept': 'application/json'
