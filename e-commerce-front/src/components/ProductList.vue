@@ -56,7 +56,7 @@ import axios from 'axios';
 
             async deleteProduct(id){
                 var token = localStorage.getItem('token');
-                await axios.delete(`http://127.0.0.1:8080/api/products/${id}`,{
+                await axios.delete(`http://192.168.56.108:8080/api/products/${id}`,{
                     headers:{
                         'Authorization': "Bearer " + token,
                         'Accept': 'application/json'
