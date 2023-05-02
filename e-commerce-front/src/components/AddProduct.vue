@@ -48,7 +48,7 @@ import axios from 'axios';
                     this.isError = true;
                 }
                 else{
-                    axios.post("http://127.0.0.1:8080/api/products", {
+                    axios.post("http://192.168.56.108:8080/api/products", {
                         name: this.name,
                         description: this.description,
                         photo: 'path/to/the/picture',
