@@ -58,7 +58,7 @@ import axios from 'axios';
                     this.messageShow = true;
                 }
                 else{
-                    await axios.post('http://127.0.0.1:8080/api/register', {
+                    await axios.post('http://192.168.56.108:8080/api/register', {
                         login: this.username,
                         password: this.password,
                         email: this.mail,
