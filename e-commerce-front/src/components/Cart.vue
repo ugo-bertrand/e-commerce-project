@@ -39,7 +39,7 @@ import axios from 'axios';
 
             deleteCart(id){
                 var token = localStorage.getItem('token');
-                axios.delete(`http://127.0.0.1:8080/api/carts/${id}`,{
+                axios.delete(`http://192.168.56.108:8080/api/carts/${id}`,{
                     headers: {
                         'Authorization': "Bearer " + token,
                         'Accept': 'application/json'
