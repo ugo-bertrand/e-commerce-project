@@ -66,7 +66,7 @@ import axios from 'axios';
                 }
                 else{
                     console.log(token);
-                    axios.put('http://127.0.0.1:8080/api/users',{login: this.username, password: this.password, email: this.mail, firstname: this.firstname
+                    axios.put('http://192.168.56.108:8080/api/users',{login: this.username, password: this.password, email: this.mail, firstname: this.firstname
                     , lastname: this.lastname},{
                         headers:{
                             'Authorization': 'Bearer ' + token,
