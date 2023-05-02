@@ -41,7 +41,7 @@ import axios from 'axios';
                     this.log = false;
                 }
                 else{
-                    await axios.get('http://127.0.0.1:8080/api/users', {
+                    await axios.get('http://192.168.56.108:8080/api/users', {
                         headers:{
                             'Authorization': 'Bearer ' + token,
                             'Accept': 'application/json'
