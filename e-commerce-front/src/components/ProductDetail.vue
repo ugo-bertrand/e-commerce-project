@@ -30,7 +30,7 @@ export default {
     },
     mounted(){
         var token = localStorage.getItem("item");
-        axios.get(`http://127.0.0.1:8080/api/products/${this.id}`,{
+        axios.get(`http://192.168.56.108:8080/api/products/${this.id}`,{
             headers:{
                 'Authorization': 'Bearer ' + token,
                 'Accept': 'application/json'
